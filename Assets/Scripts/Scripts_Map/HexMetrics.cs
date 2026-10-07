@@ -52,4 +52,22 @@ public class HexMetrics : MonoBehaviour
         }
         return centerPosition;
     }
+
+    public static Vector3 OffsetToCube(int x, int z, HexOrientation orientation)
+    {
+        Vector3 cubeCoord;
+        if (orientation == HexOrientation.PointyTop)
+        {
+            cubeCoord.x = x - (z - (z & 1)) / 2;
+            cubeCoord.z = z;
+            cubeCoord.y = -cubeCoord.x - cubeCoord.z;
+        }
+        else
+        {
+            cubeCoord.x = x;
+            cubeCoord.z = z - (x - (x & 1)) / 2;
+            cubeCoord.y = -cubeCoord.x - cubeCoord.z;
+        }
+        return cubeCoord;
+    }
 }
