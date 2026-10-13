@@ -80,9 +80,9 @@ public class HexGridMeshGenerator : MonoBehaviour
                     int cornerIndex = s + 2 > 6 ? s + 2 - 6 : s + 2;
                     int baseVertex = (z * width + x) * 7;
                     // Swap the last two indices so the triangle winding is reversed (front face points up)
-                    triangles[3 * 6 * (z * width + x) + s * 3 + 0] = baseVertex;
+                    triangles[3 * 6 * (z * width + x) + s * 3 + 0] = baseVertex + s + 1;
                     triangles[3 * 6 * (z * width + x) + s * 3 + 1] = baseVertex + cornerIndex;
-                    triangles[3 * 6 * (z * width + x) + s * 3 + 2] = baseVertex + s + 1;
+                    triangles[3 * 6 * (z * width + x) + s * 3 + 2] = baseVertex;
                 }
             }
         }
