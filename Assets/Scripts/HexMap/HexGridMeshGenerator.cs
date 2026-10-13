@@ -11,12 +11,13 @@ public class HexGridMeshGenerator : MonoBehaviour
     // -- Serialized Fields ------------------------------------------------------------------//
     [field: SerializeField] public LayerMask gridLayer {get; private set;}
     [field: SerializeField] public HexGrid hexGrid {get; private set;}
+    public Transform explosionTest;
 
 
-    
+
     // -- End of Serialized Fields -----------------------------------------------------------//
-
-
+    //
+    // -- Automated Functions: Start, Awake, Etc. ---------------------------------------------------------------------------//
     private void Awake()
     {
         if(hexGrid == null){
@@ -25,6 +26,19 @@ public class HexGridMeshGenerator : MonoBehaviour
             Debug.LogError("HexGridMeshGenerator could not find a HexGrid component in its parent or itself.");}
     }
 
+    private void OnEnable()
+    {
+        MouseController.Instance.OnLeftMouseClick += OnLeftMouseClick;
+        MouseController.Instance.OnRightMouseClick += OnRightMouseClick;
+    }
+
+    private void OnDisable()
+    {
+        MouseController.Instance.OnLeftMouseClick -= OnLeftMouseClick;
+        MouseController.Instance.OnRightMouseClick -= OnRightMouseClick;
+    }
+    // -- End of Automated Functions: Start, Awake, Etc. --------------------------------------------------------------------//
+    //
     // -- Functions ---------------------------------------------------------------------------------------------------------//
 
     public void CreateHexMesh()
@@ -113,6 +127,25 @@ public class HexGridMeshGenerator : MonoBehaviour
         }
         return 0;
     }
-    
+
+    private void OnLeftMouseClick(RaycastHit hit)
+    {
+        Debug.Log("Hit object: " + hit.transform.name + " at position " + hit.point);
+        float localX = hit.point.x - hit.transform.position.x;
+        float localZ = hit.point.z - hit.transform.position.z;
+        //Debug.Log("Hex position: " + HexMetrics.CoordinateToAxial(localX, localZ, grid.HexSize, grid.Orientation));
+        Debug.Log("Offset Position: " + HexMetrics.CoordinateToOffset(localX, localZ, hexGrid.HexSize, hexGrid.Orientation));
+    }
+
+    private void OnRightMouseClick(RaycastHit hit)
+    {
+        float localX = hit.point.x - hit.transform.position.x;
+        float localZ = hit.point.z - hit.transform.position.z;
+
+        Vector2 location = HexMetrics.CoordinateToOffset(localX, localZ, hexGrid.HexSize, hexGrid.Orientation);
+        Vector3 center = HexMetrics.Center(hexGrid.HexSize, (int)location.x, (int)location.y, hexGrid.Orientation);
+        Debug.Log("Right Clicked on Hex: " + location);
+        Instantiate(explosionTest, center, Quaternion.identity);
+    }
     // -- End of Functions --------------------------------------------------------------------------------------------------//
 }
