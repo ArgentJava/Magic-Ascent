@@ -1,14 +1,21 @@
-using UnityEngine;
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using UnityEngine;
 
+//Creates MeshFilter, MeshRenderer, and MeshCollider if they don't already exist.
 [RequireComponent(typeof(MeshFilter), typeof(MeshRenderer), typeof(MeshCollider))]
 
 public class HexGridMeshGenerator : MonoBehaviour
 {
+    // -- Serialized Fields ------------------------------------------------------------------//
     [field: SerializeField] public LayerMask gridLayer {get; private set;}
     [field: SerializeField] public HexGrid hexGrid {get; private set;}
+
+
+    
+    // -- End of Serialized Fields -----------------------------------------------------------//
+
 
     private void Awake()
     {
@@ -17,6 +24,8 @@ public class HexGridMeshGenerator : MonoBehaviour
         if (hexGrid == null){
             Debug.LogError("HexGridMeshGenerator could not find a HexGrid component in its parent or itself.");}
     }
+
+    // -- Functions ---------------------------------------------------------------------------------------------------------//
 
     public void CreateHexMesh()
     {
@@ -104,5 +113,6 @@ public class HexGridMeshGenerator : MonoBehaviour
         }
         return 0;
     }
-
+    
+    // -- End of Functions --------------------------------------------------------------------------------------------------//
 }
