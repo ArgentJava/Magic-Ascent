@@ -69,7 +69,7 @@ public class MapGenerator : MonoBehaviour
 
         ValidateSettings();
 
-        StartCoroutine(GenerateMapCoroutine());
+        //StartCoroutine(GenerateMapCoroutine());
     }
 
     private IEnumerator GenerateMapCoroutine()
