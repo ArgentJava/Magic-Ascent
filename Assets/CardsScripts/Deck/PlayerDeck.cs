@@ -34,7 +34,7 @@ public class PlayerDeck : MonoBehaviour
             deck[i] = CardDatabase.cardList[x];
         }
 
-        StartCoroutine(StartGame());
+        StartGame();
 
     }
 
@@ -66,10 +66,9 @@ public class PlayerDeck : MonoBehaviour
         }
     }
 
-    IEnumerator StartGame()
+    private void StartGame()
     {
-        StartCoroutine(DrawCard(5));
-        return null;
+        StartCoroutine(DrawCard(5));     
     }
 
     public void Shuffle()

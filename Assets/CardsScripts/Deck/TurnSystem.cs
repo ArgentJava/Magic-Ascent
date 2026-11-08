@@ -61,6 +61,7 @@ public class TurnSystem : MonoBehaviour
             turnCount += 1;
             maxMana += 1;
             currentMana = maxMana;
+            startTurn = true;
         }
         else { /*Do nothing. Preferrably button is disabled*/ }
     }
